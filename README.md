@@ -136,10 +136,10 @@ Optimized with **Optuna (25 trials)** across ranges:
 
 ### Confusion Matrix :
 
-              | Predicted Neither | Predicted Offensive/Hate
---------------|-------------------|------------------------
-Actual Neither|         568         |            57           
-Actual Offensive|         77          |           3016 
+                | Predicted Neither | Predicted Offensive/Hate
+----------------|-------------------|------------------------
+Actual Neither  |         568       |            57           
+Actual Offensive|        77         |          3016 
 
 ### Performance Breakdown
 
