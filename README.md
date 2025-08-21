@@ -48,10 +48,8 @@ Generalizability
 ### Dataset Statistics:
 
 * **Total Tweets**: 24,783
-* **Labels**:
-
-* Hate Speech / Offensive 20620
-* Neutral → 4163
+* **Hate Speech / Offensive**: 20620
+* **Neutral**: 4163
 * **Average Tweet Length**: ~86 characters)
 * **Language**: English
 
