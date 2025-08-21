@@ -112,6 +112,7 @@ Optimized with **Optuna (25 trials)** across ranges:
 ---
 ## 📁 Project Structure
 
+```plaintext
 amy-bot-toxic-message-identifier/
 │
 ├── Data/
@@ -122,6 +123,7 @@ amy-bot-toxic-message-identifier/
 │
 ├── README.md                         
 ├── .gitignore
+
 ---
 
 ## 🛠️ Technical Implementation
