@@ -123,7 +123,7 @@ amy-bot-toxic-message-identifier/
 │
 ├── README.md                         
 ├── .gitignore
-
+```
 ---
 
 ## 🛠️ Technical Implementation
