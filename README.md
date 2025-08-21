@@ -112,16 +112,17 @@ Optimized with **Optuna (25 trials)** across ranges:
 ---
 ## 📁 Project Structure
 
+```plaintext
 amy-bot-toxic-message-identifier/
 │
 ├── Data/
-│ └── labeled_data.csv 
+│   └── labeled_data.csv             
 │
 ├── notebooks/
-│ └── Hate_Speech_and_offensive_message_classifier.ipynb 
+│   └── Hate_Speech_and_offensive_message_classifier.ipynb  
 │
-├── README.md 
-├── .gitignore 
+├── README.md                         
+├── .gitignore
 ---
 
 ## 🛠️ Technical Implementation
