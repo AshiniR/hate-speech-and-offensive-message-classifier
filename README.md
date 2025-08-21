@@ -2,7 +2,7 @@
 
 **Python 3.8+ | Hugging Face | PyTorch**
 
-A state-of-the-art hate speech and offensive language classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**. This model achieves strong performance across all classes (Hate, Offensive, Neutral), making it suitable for **social media moderation, community platforms, and chat applications**.
+A state-of-the-art hate speech and offensive language classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.90 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
 
 ---
 
@@ -13,8 +13,8 @@ This project develops an intelligent text classification system that can automat
 ### 🔑 Key Features
 
 * 🤖 **Transformer-based Architecture**: Built on `roberta-base` for advanced natural language understanding
-* ⚡ **High Performance**: Optimized with weighted loss to handle imbalanced data
-* 🔧 **Hyperparameter Optimization**: Automated search with Optuna for dropout, learning rate, batch size, etc.
+* ⚡ **High Performance**: 0.90 F1-score for spam detection, 96.40% overall accuracy
+* 🔧 **Hyperparameter Optimization**: Automated tuning using Optuna framework
 * ⚖️ **Class Imbalance Handling**: Weighted cross-entropy loss for fairness across labels
 * 📊 **Comprehensive Evaluation**: Precision, Recall, F1-score, confusion matrix
 * 🚀 **Production Ready**: Model + tokenizer saved in Hugging Face format for direct deployment
@@ -25,19 +25,22 @@ This project develops an intelligent text classification system that can automat
 
 ### Final Results on Test Set:
 
-* **Overall Accuracy**: *e.g., 94.8%*
-* **Weighted F1-Score**: *e.g., 0.947*
+* **Overall Accuracy**: *96.40%*
+* **Weighted F1-Score**: *0.9642*
+* **Offensive/Hate** F1-Score: 0.9783 ✅ (Exceeds 0.90 acceptance threshold)
+* **Offensive/Hate** Precision: 98.15% 
+* **Offensive/Hate** Recall: 97.51% (High spam detection rate)
+* **Neither** Precision: 88.06%
+* **Neither** Recall: 90.88%
 
-Class-wise Performance (example):
-
-* **Hate Speech** → Precision: *0.92*, Recall: *0.89*, F1: *0.905*
-* **Offensive** → Precision: *0.95*, Recall: *0.96*, F1: *0.955*
-* **Neutral** → Precision: *0.96*, Recall: *0.97*, F1: *0.965*
 
 ✅ **Acceptance Criteria**: The model is considered acceptable for deployment since **class-wise F1-scores exceed 0.90**, ensuring reliability in detecting harmful content.
 
 ---
+Generalizability
+📊 Strong Generalization: All performance metrics are evaluated on a completely unseen test set (15% of data, 3718 messages) that was never used during training or hyperparameter tuning, ensuring robust real-world performance and preventing overfitting.
 
+---
 ## 📖 Dataset
 
 **Source**: [Hate Speech and Offensive Language Dataset (Davidson et al., 2017)](https://www.kaggle.com/datasets/mrmorj/hate-speech-and-offensive-language-dataset)
@@ -47,19 +50,22 @@ Class-wise Performance (example):
 * **Total Tweets**: 24,783
 * **Labels**:
 
-  * Hate Speech → \~2,399 (9.7%)
-  * Offensive → \~19,190 (77.4%)
-  * Neutral → \~4,190 (12.9%)
-* **Average Tweet Length**: \~20 words (\~100 characters)
+* Hate Speech / Offensive 20620
+* Neutral → 4163
+* **Average Tweet Length**: ~86 characters)
 * **Language**: English
 
-### Preprocessing Steps:
+### Dataset Split:
+* Training Set: 70% (17,348 tweets) – model training
+* Validation Set: 15% (3,717 tweets) – hyperparameter tuning
+* Test Set: 15% (3,718 tweets) – final evaluation on unseen data
 
-* Lowercasing and text normalization
-* Removal of URLs, mentions, and special characters
-* Label encoding (`hate → 0`, `offensive → 1`, `neutral → 2`)
-* Train/validation/test split: **70% / 15% / 15%**
-* Tokenization with RoBERTa tokenizer + dynamic padding/truncation
+### Preprocessing Steps:
+* Label mapping: 0 = Neither, 1 = Hate/Offensive.
+* Text cleaning and normalization with Discord-specific preprocessing.
+* Train/validation/test split.
+* Tokenization with RoBERTa tokenizer.
+* Dynamic padding and truncation.
 
 ---
 
@@ -67,16 +73,18 @@ Class-wise Performance (example):
 
 ### Model Architecture
 
-* **Base Model**: `FacebookAI/roberta-base`
-* **Task**: Multi-class sequence classification (3 labels)
-* **Fine-tuning**: Custom classification head with 3 outputs
+* **Base Model**: `roberta-base` (Hugging Face Transformers)
+* **Task**: Multi-class sequence classification (2 labels)
+* **Fine-tuning**: Custom classification head with 2 outputs
+* **Tokenization**: RoBERTa tokenizer with optimal sequence length
 
 ### Training Strategy
 
-* **Loss Function**: Weighted CrossEntropyLoss (to handle imbalance)
-* **Label Smoothing**: 0.1 to prevent overconfidence
-* **Optimizer**: AdamW with weight decay
-* **Scheduler**: Linear warmup/decay
+1. Data Preprocessing: Hate/offencive message cleaning and label encoding
+2. Tokenization: Dynamic padding with optimal max length
+3. Class Balancing: Weighted loss function to handle imbalanced dataset
+4. Hyperparameter Optimization: Optuna-based automated tuning
+5. Evaluation: Comprehensive metrics on held-out test set
 
 ---
 
@@ -84,43 +92,61 @@ Class-wise Performance (example):
 
 Optimized with **Optuna (25 trials)** across ranges:
 
-* Dropout rates: `0.1 – 0.3`
-* Learning rate: `1e-5 – 5e-5`
-* Weight decay: `0.0 – 0.1`
-* Batch size: `[16, 32]`
-* Gradient accumulation: `[1, 2, 4]`
-* Epochs: `[3, 5, 6]`
-* Warmup ratio: `[0.05 – 0.1]`
+* Dropout rates: Hidden dropout (0.1-0.3), Attention dropout (0.1-0.2)
+* Learning rate: 1e-5 to 5e-5 range
+* Weight decay: 0.0 to 0.1 regularization
+* Batch size: 8, 16, or 32 samples
+* Gradient accumulation steps: 1 to 4
+* Training epochs: 2 to 5 epochs
+* Warmup ratio: 0.05 to 0.1 for learning rate scheduling
 
 ### Best Parameters Found:
 
-* Hidden Dropout: `0.158`
-* Attention Dropout: `0.186`
-* Learning Rate: `2.24e-05`
-* Weight Decay: `0.058`
+* Hidden Dropout: `0.15753874524501874`
+* Attention Dropout: `0.18637789174124067`
+* Learning Rate: `2.2387578164845272e-05`
+* Weight Decay: `0.0584461761227439`
 * Batch Size: `32`
 * Gradient Accumulation: `2`
 * Epochs: `5`
-* Warmup Ratio: `0.085`
+* Warmup Ratio: `0.08517609320221509`
+
+---
+## 📁 Project Structure
 
 ---
 
+## 🛠️ Technical Implementation
+### Key Technologies
+* 🤗 **Transformers**: Hugging Face transformers library
+* 🔥 **PyTorch**: Deep learning framework
+* 📊 **Scikit-learn**: Evaluation metrics and preprocessing
+* 🎯 **Optuna**: Hyperparameter optimization
+* 📈 **Matplotlib/Seaborn**: Data visualization
+* 🐼 **Pandas**: Data manipulation
+
+### Custom Features
+* Weighted Loss Function: Handles class imbalance effectively
+* Label Smoothing: 0.1 to prevent overconfidence
+* Custom Metrics: Specialized spam detection metrics
+* Confusion Matrix Analysis: Detailed error analysis
+* Class-specific Performance: Separate metrics for ham and spam
+
 ## 📊 Detailed Results
 
-### Confusion Matrix (example):
+### Confusion Matrix :
 
-|                      | Predicted Neutral | Predicted Offensive | Predicted Hate |
-| -------------------- | ----------------- | ------------------- | -------------- |
-| **Actual Neutral**   | 602               | 15                  | 8              |
-| **Actual Offensive** | 22                | 2861                | 29             |
-| **Actual Hate**      | 7                 | 18                  | 208            |
+              | Predicted Neither | Predicted Offensive/Hate
+--------------|-------------------|------------------------
+Actual Neither|         568         |            57           
+Actual Offensive|         77          |           3016 
 
 ### Performance Breakdown
 
-* **True Positives (Hate)**: 208
-* **True Positives (Offensive)**: 2861
-* **True Positives (Neutral)**: 602
-* **Error Analysis**: Most confusion occurs between *Offensive* and *Hate* classes (expected due to semantic similarity).
+* **True Positives (Hate/Offencive correctly identified)**: 3016
+* **True Positives (Neutral correctly identified)**: 568
+* **False Positives (Neutral incorrectly flagged)**: 57
+* **False Negative (Hate/offencive missed)**: 77
 
 ---
 
@@ -147,32 +173,38 @@ inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
 outputs = model(**inputs)
 predicted_class = torch.argmax(outputs.logits, dim=1).item()
 
-print("Prediction:", predicted_class)  # 0 = hate, 1 = offensive, 2 = neutral
+print("Prediction:", predicted_class)  #  1 = hate/offensive, 0 = neutral
 ```
 
 ---
 
 ## 🎯 Use Cases
+This spam classifier is ideal for:
 
-This classifier can be deployed in:
-
-* 💬 **Social Media Platforms** → detecting toxic tweets, comments
-* 🛡️ **Content Moderation** → filtering offensive/hateful messages in real-time
-* 🤖 **Chatbots / Moderation Bots** → Discord, Slack, Telegram
-* 📢 **Research** → studying hate speech and online toxicity
+### 💬 Messaging Platforms
+* Discord bot moderation (Primary use case)
+* SMS filtering systems
+* Chat application content filtering
+### 🛡️ Content Moderation
+* Social media platforms
+* Comment section filtering
+* User-generated content screening
 
 ---
 
 ## 🔄 Deployment
 
-* Model and tokenizer are saved in Hugging Face format
-* Can be pushed to Hugging Face Hub for public use
-* Ready for integration into moderation pipelines (e.g., Discord bot **Amy**)
+### 🤖 Integration with Amy Discord Bot
+
+This model serves as the **core hate & offensive language detection component** for **Amy**, an intelligent Discord moderation bot that:
+
+* Detects **hate speech** and **offensive messages** in real time  
+* Flags or removes harmful content automatically  
+* Helps maintain a **safe and respectful server environment**  
+* Supports server admins with actionable insights on community health 
 
 ---
 
 ⭐ If you find this project helpful, please give it a star! ⭐
 
 ---
-
-Do you want me to **write this README with your exact results** (from your training runs & confusion matrix), or should I leave placeholders (`e.g. 94.8%`) for you to fill in manually?
