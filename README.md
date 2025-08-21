@@ -112,7 +112,6 @@ Optimized with **Optuna (25 trials)** across ranges:
 ---
 ## 📁 Project Structure
 
-```plaintext
 amy-bot-toxic-message-identifier/
 │
 ├── Data/
