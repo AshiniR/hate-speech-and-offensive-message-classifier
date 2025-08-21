@@ -112,6 +112,16 @@ Optimized with **Optuna (25 trials)** across ranges:
 ---
 ## 📁 Project Structure
 
+amy-bot-toxic-message-identifier/
+│
+├── Data/
+│ └── labeled_data.csv 
+│
+├── notebooks/
+│ └── Hate_Speech_and_offensive_message_classifier.ipynb 
+│
+├── README.md 
+├── .gitignore 
 ---
 
 ## 🛠️ Technical Implementation
@@ -134,11 +144,10 @@ Optimized with **Optuna (25 trials)** across ranges:
 
 ### Confusion Matrix :
 
-                | Predicted Neither | Predicted Offensive/Hate
-----------------|-------------------|------------------------
-Actual Neither  |         568       |            57           
-Actual Offensive|        77         |          3016 
-
+|                     | Predicted Neither | Predicted Offensive/Hate |
+|---------------------|-------------------|--------------------------|
+| **Actual Neither**  | 568               | 57                       |
+| **Actual Offensive**| 77                | 3016                     |
 ### Performance Breakdown
 
 * **True Positives (Hate/Offencive correctly identified)**: 3016
