@@ -8,7 +8,7 @@ A state-of-the-art hate speech and offensive language classifier built with the 
 
 ## 🎯 Overview
 
-This project develops an intelligent text classification system that can automatically detect **hate speech, offensive language, and neutral messages**. The model is optimized for high precision and recall to ensure that harmful content is correctly identified while minimizing false alarms.
+This project develops an intelligent text classification system that can automatically detect **hate speech, offensive language, and netural messages**. The model is optimized for high precision and recall to ensure that harmful content is correctly identified while minimizing false alarms.
 
 ### 🔑 Key Features
 
@@ -138,9 +138,9 @@ amy-bot-toxic-message-identifier/
 ### Custom Features
 * Weighted Loss Function: Handles class imbalance effectively
 * Label Smoothing: 0.1 to prevent overconfidence
-* Custom Metrics: Specialized spam detection metrics
+* Custom Metrics: Specialized  hate/offensive massege detection metrics
 * Confusion Matrix Analysis: Detailed error analysis
-* Class-specific Performance: Separate metrics for ham and spam
+* Class-specific Performance: Separate metrics for natural and hate/offensive
 
 ## 📊 Detailed Results
 
@@ -188,7 +188,7 @@ print("Prediction:", predicted_class)  #  1 = hate/offensive, 0 = neutral
 ---
 
 ## 🎯 Use Cases
-This spam classifier is ideal for:
+This hate/offensive massege classifier is ideal for:
 
 ### 💬 Messaging Platforms
 * Discord bot moderation (Primary use case)
