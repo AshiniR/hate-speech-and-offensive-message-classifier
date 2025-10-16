@@ -1,8 +1,8 @@
 # 🚫 Hate Speech & Offensive Language Classifier
 
-**Python 3.8+ | Hugging Face | PyTorch**
+**Python 3.8+ | HuggingFace | PyTorch**
 
-A state-of-the-art hate speech and offensive language classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.90 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
+A state-of-the-art hate speech and offensive language classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.9783 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
 
 ---
 
@@ -13,7 +13,7 @@ This project develops an intelligent text classification system that can automat
 ### 🔑 Key Features
 
 * 🤖 **Transformer-based Architecture**: Built on `roberta-base` for advanced natural language understanding
-* ⚡ **High Performance**: 0.90 F1-score for spam detection, 96.40% overall accuracy
+* ⚡ **High Performance**: 0.9783 F1-score for spam detection, 96.40% overall accuracy
 * 🔧 **Hyperparameter Optimization**: Automated tuning using Optuna framework
 * ⚖️ **Class Imbalance Handling**: Weighted cross-entropy loss for fairness across labels
 * 📊 **Comprehensive Evaluation**: Precision, Recall, F1-score, confusion matrix
@@ -50,7 +50,7 @@ Generalizability
 * **Total Tweets**: 24,783
 * **Hate Speech / Offensive**: 20620
 * **Neutral**: 4163
-* **Average Tweet Length**: ~86 characters)
+* **Average Tweet Length**: ~86 characters
 * **Language**: English
 
 ### Dataset Split:
