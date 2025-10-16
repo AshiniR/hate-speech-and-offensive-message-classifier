@@ -1,8 +1,8 @@
-# 🚫 Hate Speech & Offensive Language Classifier
+# 🚫 Hate Speech & Offensive Message Classifier
 
 **Python 3.8+ | HuggingFace | PyTorch**
 
-A state-of-the-art hate speech and offensive language classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.9783 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
+A state-of-the-art hate speech and offensive message classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.9783 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
 
 ---
 
@@ -205,7 +205,7 @@ This hate/offensive massege classifier is ideal for:
 
 ### 🤖 Integration with Amy Discord Bot
 
-This model serves as the **core hate & offensive language detection component** for **Amy**, an intelligent Discord moderation bot that:
+This model serves as the **core hate & offensive message detection component** for **Amy**, an intelligent Discord moderation bot that:
 
 * Detects **hate speech** and **offensive messages** in real time  
 * Flags or removes harmful content automatically  
