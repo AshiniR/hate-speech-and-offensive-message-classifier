@@ -1,8 +1,9 @@
 # 🚫 Hate Speech & Offensive Message Classifier
 
-**Python 3.8+ | HuggingFace | PyTorch**
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/AshiniR/hate-speech-and-offensive-message-classifier)
 
-A state-of-the-art hate speech and offensive message classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.9783 F1-score for Hate speech and offencive message detection and 96.40% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
+A state-of-the-art hate speech and offensive message classifier built with the **RoBERTa transformer model**, fine-tuned on the **Davidson et al. (2017) Twitter dataset**.  This model achieves exceptional performance with 0.9774 F1-score for Hate speech and offencive message detection and 96.23% overall accuracy, making it suitable for **social media moderation, community platforms, and chat applications**.
 
 ---
 
@@ -13,7 +14,7 @@ This project develops an intelligent text classification system that can automat
 ### 🔑 Key Features
 
 * 🤖 **Transformer-based Architecture**: Built on `roberta-base` for advanced natural language understanding
-* ⚡ **High Performance**: 0.9783 F1-score for spam detection, 96.40% overall accuracy
+* ⚡ **High Performance**: 0.9774 F1-score for spam detection, 96.23% overall accuracy
 * 🔧 **Hyperparameter Optimization**: Automated tuning using Optuna framework
 * ⚖️ **Class Imbalance Handling**: Weighted cross-entropy loss for fairness across labels
 * 📊 **Comprehensive Evaluation**: Precision, Recall, F1-score, confusion matrix
@@ -25,13 +26,13 @@ This project develops an intelligent text classification system that can automat
 
 ### Final Results on Test Set:
 
-* **Overall Accuracy**: *96.40%*
-* **Weighted F1-Score**: *0.9642*
-* **Offensive/Hate** F1-Score: 0.9783 ✅ (Exceeds 0.90 acceptance threshold)
-* **Offensive/Hate** Precision: 98.15% 
-* **Offensive/Hate** Recall: 97.51% (High spam detection rate)
-* **Neither** Precision: 88.06%
-* **Neither** Recall: 90.88%
+* **Overall Accuracy**: *96.23%*
+* **Weighted F1-Score**: *0.9621*
+* **Offensive/Hate** F1-Score: 0.9774 ✅ (Exceeds 0.90 acceptance threshold)
+* **Offensive/Hate** Precision: 97.49% 
+* **Offensive/Hate** Recall: 98% (High spam detection rate)
+* **Neither** Precision: 89.82%
+* **Neither** Recall: 87.52%
 
 
 ✅ **Acceptance Criteria**: The model is considered acceptable for deployment since **class-wise F1-scores exceed 0.90**, ensuring reliability in detecting harmful content.
@@ -60,7 +61,7 @@ Generalizability
 
 ### Preprocessing Steps:
 * Label mapping: 0 = Neither, 1 = Hate/Offensive.
-* Text cleaning and normalization with Discord-specific preprocessing.
+* Text cleaning.
 * Train/validation/test split.
 * Tokenization with RoBERTa tokenizer.
 * Dynamic padding and truncation.
@@ -100,14 +101,14 @@ Optimized with **Optuna (25 trials)** across ranges:
 
 ### Best Parameters Found:
 
-* Hidden Dropout: `0.15753874524501874`
-* Attention Dropout: `0.18637789174124067`
-* Learning Rate: `2.2387578164845272e-05`
-* Weight Decay: `0.0584461761227439`
-* Batch Size: `32`
-* Gradient Accumulation: `2`
-* Epochs: `5`
-* Warmup Ratio: `0.08517609320221509`
+* Hidden Dropout: `0.13034059066330464`
+* Attention Dropout: `0.1935379847495239`
+* Learning Rate: `1.031409901695853e-05`
+* Weight Decay: `0.03606621145317628`
+* Batch Size: `16`
+* Gradient Accumulation: `1`
+* Epochs: `2`
+* Warmup Ratio: `0.0718442228846798`
 
 ---
 ## 📁 Project Structure
@@ -115,11 +116,11 @@ Optimized with **Optuna (25 trials)** across ranges:
 ```plaintext
 amy-bot-toxic-message-identifier/
 │
-├── Data/
+├── data/
 │   └── labeled_data.csv             
 │
 ├── notebooks/
-│   └── Hate_Speech_and_offensive_message_classifier.ipynb  
+│   └── hate_speech_and_offensive_message_classifier.ipynb  
 │
 ├── README.md                         
 ├── .gitignore
@@ -148,14 +149,14 @@ amy-bot-toxic-message-identifier/
 
 |                     | Predicted Neither | Predicted Offensive/Hate |
 |---------------------|-------------------|--------------------------|
-| **Actual Neither**  | 568               | 57                       |
-| **Actual Offensive**| 77                | 3016                     |
+| **Actual Neither**  | 547               | 78                       |
+| **Actual Offensive**| 62                | 3031                     |
 ### Performance Breakdown
 
-* **True Positives (Hate/Offencive correctly identified)**: 3016
-* **True Positives (Neutral correctly identified)**: 568
-* **False Positives (Neutral incorrectly flagged)**: 57
-* **False Negative (Hate/offencive missed)**: 77
+* **True Positives (Hate/Offensive correctly identified)**: 3031
+* **True Negatives (Neutral correctly identified)**: 547
+* **False Positives (Neutral incorrectly flagged)**: 78
+* **False Negatives (Hate/offensive missed)**: 62
 
 ---
 
@@ -174,15 +175,44 @@ from transformers import RobertaTokenizer, RobertaForSequenceClassification
 import torch
 
 # Load the trained model + tokenizer
-model = RobertaForSequenceClassification.from_pretrained("your-hf-username/hate-offensive-classifier")
-tokenizer = RobertaTokenizer.from_pretrained("your-hf-username/hate-offensive-classifier")
+model = RobertaForSequenceClassification.from_pretrained("AshiniR/hate-speech-and-offensive-message-classifier")
+tokenizer = RobertaTokenizer.from_pretrained("AshiniR/hate-speech-and-offensive-message-classifier")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
 
+def get_inference(text: str) -> list:
+    """Returns prediction results in [{'label': str, 'score': float}, ...] format."""
+    # Tokenize input text
+    inputs = tokenizer(
+        text,
+        return_tensors="pt",
+        truncation=True,
+        padding=False,
+        max_length=128
+    )
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+    
+    # Get model predictions
+    with torch.no_grad():
+        outputs = model(**inputs)
+        probabilities = torch.softmax(outputs.logits, dim=-1)
+    
+    # Convert to label format
+    labels = ["neither", "hate/offensive"]
+    results = []
+    for i, prob in enumerate(probabilities[0]):
+        results.append({
+            "label": labels[i],
+            "score": prob.item()
+        })
+    
+    return sorted(results, key=lambda x: x["score"], reverse=True)
+
+# Example usage
 text = "I hate you!"
-inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-outputs = model(**inputs)
-predicted_class = torch.argmax(outputs.logits, dim=1).item()
-
-print("Prediction:", predicted_class)  #  1 = hate/offensive, 0 = neutral
+predictions = get_inference(text)
+print(f"Text: '{text}'")
+print(f"Predictions: {predictions}")
 ```
 
 ---
