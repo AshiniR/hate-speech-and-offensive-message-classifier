@@ -116,7 +116,7 @@ Optimized with **Optuna (25 trials)** across ranges:
 ```plaintext
 amy-bot-toxic-message-identifier/
 │
-├── data/
+├── Data/
 │   └── labeled_data.csv             
 │
 ├── notebooks/
