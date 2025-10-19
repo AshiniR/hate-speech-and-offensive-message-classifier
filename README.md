@@ -14,7 +14,7 @@ This project develops an intelligent text classification system that can automat
 ### 🔑 Key Features
 
 * 🤖 **Transformer-based Architecture**: Built on `roberta-base` for advanced natural language understanding
-* ⚡ **High Performance**: 0.9774 F1-score for spam detection, 96.23% overall accuracy
+* ⚡ **High Performance**: 0.9774 F1-score for hate/offensive detection, 96.23% overall accuracy
 * 🔧 **Hyperparameter Optimization**: Automated tuning using Optuna framework
 * ⚖️ **Class Imbalance Handling**: Weighted cross-entropy loss for fairness across labels
 * 📊 **Comprehensive Evaluation**: Precision, Recall, F1-score, confusion matrix
@@ -30,7 +30,7 @@ This project develops an intelligent text classification system that can automat
 * **Weighted F1-Score**: *0.9621*
 * **Offensive/Hate** F1-Score: 0.9774 ✅ (Exceeds 0.90 acceptance threshold)
 * **Offensive/Hate** Precision: 97.49% 
-* **Offensive/Hate** Recall: 98% (High spam detection rate)
+* **Offensive/Hate** Recall: 98% (High hate/offensive detection rate)
 * **Neither** Precision: 89.82%
 * **Neither** Recall: 87.52%
 
