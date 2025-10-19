@@ -89,7 +89,7 @@ Generalizability
 
 ## ⚙️ Hyperparameter Optimization
 
-Optimized with **Optuna (25 trials)** across ranges:
+Optimized with **Optuna (15 trials)** across ranges:
 
 * Dropout rates: Hidden dropout (0.1-0.3), Attention dropout (0.1-0.2)
 * Learning rate: 1e-5 to 5e-5 range
